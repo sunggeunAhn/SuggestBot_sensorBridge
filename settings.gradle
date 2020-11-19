@@ -1,1 +1,1 @@
-include ':app'
+include ':app', ':volley-release', ':volley-debug', ':libStreamSDK_v1.2.0', ':empalink-2.2', ':library_neurosky'

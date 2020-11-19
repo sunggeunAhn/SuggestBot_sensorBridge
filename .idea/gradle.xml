@@ -9,6 +9,11 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/empalink-2.2" />
+            <option value="$PROJECT_DIR$/libStreamSDK_v1.2.0" />
+            <option value="$PROJECT_DIR$/library_neurosky" />
+            <option value="$PROJECT_DIR$/volley-debug" />
+            <option value="$PROJECT_DIR$/volley-release" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

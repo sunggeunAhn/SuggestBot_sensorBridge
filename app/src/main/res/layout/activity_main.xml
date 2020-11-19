@@ -19,40 +19,390 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/app_bar"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark">
+        android:orientation="vertical">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/app_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/colorPrimary"
-            android:paddingLeft="32dp"
-            android:paddingRight="32dp"/>
+            android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-        <include layout="@layout/item_result"/>
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/colorPrimary"
+                android:paddingLeft="32dp"
+                android:paddingRight="32dp" />
 
-    </android.support.design.widget.AppBarLayout>
+            <include layout="@layout/item_result" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:paddingBottom="@dimen/spacing_small"
-        android:paddingTop="@dimen/spacing_small"
-        app:behavior_overlapTop="128dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        </android.support.design.widget.AppBarLayout>
 
-    <Button
-        android:id="@+id/turn_button"
-        android:text="Get Turn"
-        android:layout_width="match_parent"
-        android:layout_height="300px"
-        android:layout_gravity="bottom"/>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="66dp"
+            android:clipToPadding="false"
+            android:paddingTop="@dimen/spacing_medium"
+            android:paddingBottom="@dimen/spacing_small"
+            app:behavior_overlapTop="128dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+
+        <TextView
+            android:id="@+id/status_e4"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:layout_gravity="bottom"/>
+
+        <TextView
+            android:id="@+id/deviceName"
+            android:layout_below="@id/status_e4"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"/>
+
+        <LinearLayout
+            android:id="@+id/dataArea"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/deviceName"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/accel_area_phone"
+                android:layout_below="@id/accel_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/accel_x" />
+
+                <TextView
+                    android:id="@+id/accel_x_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:width="50dp"
+                    android:text="@string/emptyText" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/accel_y" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:width="50dp"
+                    android:id="@+id/accel_y_phone"
+                    android:text="@string/emptyText"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/accel_z" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:width="50dp"
+                    android:id="@+id/accel_z_phone"
+                    android:text="@string/emptyText"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/gyro_area_phone"
+                android:layout_below="@id/accel_area_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/accel_x" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:width="50dp"
+                    android:id="@+id/gyro_x_phone"
+                    android:text="@string/emptyText"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/accel_y" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:width="50dp"
+                    android:id="@+id/gyro_y_phone"
+                    android:text="@string/emptyText"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/accel_z" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:width="50dp"
+                    android:id="@+id/gyro_z_phone"
+                    android:text="@string/emptyText"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/accel_area"
+                android:layout_below="@id/accel_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/accel_x" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:width="50dp"
+                    android:id="@+id/accel_x"
+                    android:text="@string/emptyText"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/accel_y" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:width="50dp"
+                    android:id="@+id/accel_y"
+                    android:text="@string/emptyText"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/accel_z" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:width="50dp"
+                    android:id="@+id/accel_z"
+                    android:text="@string/emptyText"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/deviceName"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/deviceName"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/bvp_label"
+                        android:layout_below="@id/accel_area"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/bvp_label" />
+
+                    <TextView
+                        android:layout_below="@id/bvp_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/bvp"
+                        android:text="@string/emptyText"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/deviceName"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_weight="1"
+                        android:id="@+id/eda_label"
+                        android:layout_below="@id/bvp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/eda_label" />
+
+                    <TextView
+                        android:layout_below="@id/eda_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/eda"
+                        android:text="@string/emptyText"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/deviceName"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/ibi_label"
+                        android:layout_below="@id/eda"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/ibi_label" />
+
+                    <TextView
+                        android:layout_below="@id/ibi_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/ibi"
+                        android:text="@string/emptyText"/>
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <Button
+                    android:layout_weight="1"
+                    android:id="@+id/disconnectButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="STOP STREAMING" />
+
+                <Button
+                    android:layout_weight="1"
+                    android:id="@+id/turn_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Get Turn" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:id="@+id/tv_state"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/waiting_for_state"
+                />
+
+            <TextView
+                android:id="@+id/tv_attention"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/waiting_for_attention_signal"
+                />
+
+            <TextView
+                android:id="@+id/tv_meditation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/waiting_for_meditation_signal"
+                />
+
+            <TextView
+                android:id="@+id/tv_blink"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/waiting_for_blink_signal"
+                />
+
+            <TextView
+                android:id="@+id/tv_HR"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Heart Rate"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <Button
+                    android:layout_weight="1"
+                    android:id="@+id/btn_connect"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/connect"
+                    />
+
+                <Button
+                    android:layout_weight="1"
+                    android:id="@+id/btn_start_monitoring"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/start_monitoring"
+                    />
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:layout_weight="1"
+                    android:id="@+id/btn_stop_monitoring"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/stop_monitoring"
+                    />
+
+                <Button
+                    android:layout_weight="1"
+                    android:id="@+id/btn_disconnect"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/disconnect"
+                    />
+
+
+            </LinearLayout>
+            <Button
+                android:layout_weight="1"
+                android:id="@+id/btn_HR"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="HR_connect"
+                android:enabled="false"
+                />
+        </LinearLayout>
+        <Spinner
+            android:id="@+id/spinner1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+    </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>
