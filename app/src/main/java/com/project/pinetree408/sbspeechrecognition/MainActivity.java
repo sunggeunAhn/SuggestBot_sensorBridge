@@ -17,6 +17,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -74,6 +75,7 @@ import org.json.JSONObject;
 
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
@@ -81,6 +83,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Observable;
@@ -160,6 +163,9 @@ public class MainActivity extends AppCompatActivity implements MessageDialogFrag
     String portPathSensor = "sensor";
     boolean socketConnectionFlag = false;
 
+    boolean recflag = false;
+    MediaRecorder myAudioRecorder = null;
+
 
     // Key names received from the BluetoothChatService Handler
     public static final String DEVICE_NAME = "device_name";
@@ -185,34 +191,34 @@ public class MainActivity extends AppCompatActivity implements MessageDialogFrag
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 1;
     private static final int REQUEST_BLUETOOTH_PERMISSION = 2;
 
-    private SpeechService mSpeechService;
-
-    private VoiceRecorder mVoiceRecorder;
-    private final VoiceRecorder.Callback mVoiceCallback = new VoiceRecorder.Callback() {
-
-        @Override
-        public void onVoiceStart() {
-            showStatus(true);
-            if (mSpeechService != null) {
-                mSpeechService.startRecognizing(mVoiceRecorder.getSampleRate());
-            }
-        }
-
-        @Override
-        public void onVoice(byte[] data, int size) {
-            if (mSpeechService != null) {
-                mSpeechService.recognize(data, size);
-            }
-        }
-
-        @Override
-        public void onVoiceEnd() {
-            showStatus(false);
-            if (mSpeechService != null) {
-                mSpeechService.finishRecognizing();
-            }
-        }
-    };
+//    private SpeechService mSpeechService;
+//
+//    private VoiceRecorder mVoiceRecorder;
+//    private final VoiceRecorder.Callback mVoiceCallback = new VoiceRecorder.Callback() {
+//
+//        @Override
+//        public void onVoiceStart() {
+//            showStatus(true);
+//            if (mSpeechService != null) {
+//                mSpeechService.startRecognizing(mVoiceRecorder.getSampleRate());
+//            }
+//        }
+//
+//        @Override
+//        public void onVoice(byte[] data, int size) {
+//            if (mSpeechService != null) {
+//                mSpeechService.recognize(data, size);
+//            }
+//        }
+//
+//        @Override
+//        public void onVoiceEnd() {
+//            showStatus(false);
+//            if (mSpeechService != null) {
+//                mSpeechService.finishRecognizing();
+//            }
+//        }
+//    };
 
     // Resource caches
     private int mColorHearing;
@@ -229,17 +235,17 @@ public class MainActivity extends AppCompatActivity implements MessageDialogFrag
 
     DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-    private final ServiceConnection mServiceConnection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName componentName, IBinder binder) {
-            mSpeechService = SpeechService.from(binder);
-            mSpeechService.addListener(mSpeechServiceListener);
-            mStatus.setVisibility(View.VISIBLE);
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName componentName) { mSpeechService = null; }
-    };
+//    private final ServiceConnection mServiceConnection = new ServiceConnection() {
+//        @Override
+//        public void onServiceConnected(ComponentName componentName, IBinder binder) {
+//            mSpeechService = SpeechService.from(binder);
+//            mSpeechService.addListener(mSpeechServiceListener);
+//            mStatus.setVisibility(View.VISIBLE);
+//        }
+//
+//        @Override
+//        public void onServiceDisconnected(ComponentName componentName) { mSpeechService = null; }
+//    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -431,9 +437,9 @@ public class MainActivity extends AppCompatActivity implements MessageDialogFrag
 
         // Prepare Cloud Speech API
 
-        bindService(
-                new Intent(this, SpeechService.class),
-                mServiceConnection, BIND_AUTO_CREATE);
+//        bindService(
+//                new Intent(this, SpeechService.class),
+//                mServiceConnection, BIND_AUTO_CREATE);
 
         // Start listening to voices
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
@@ -647,10 +653,10 @@ public class MainActivity extends AppCompatActivity implements MessageDialogFrag
         stopVoiceRecorder();
 
         // Stop Cloud Speech API
-        mSpeechService.removeListener(mSpeechServiceListener);
-        unbindService(mServiceConnection);
-        mSpeechService = null;
-        if (mChatService != null) mChatService.stop();
+//        mSpeechService.removeListener(mSpeechServiceListener);
+//        unbindService(mServiceConnection);
+//        mSpeechService = null;
+//        if (mChatService != null) mChatService.stop();
         socket.disconnect();
 
         unregistListener();
@@ -676,7 +682,7 @@ public class MainActivity extends AppCompatActivity implements MessageDialogFrag
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_file:
-                mSpeechService.recognizeInputStream(getResources().openRawResource(R.raw.audio));
+//                mSpeechService.recognizeInputStream(getResources().openRawResource(R.raw.audio));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -684,18 +690,18 @@ public class MainActivity extends AppCompatActivity implements MessageDialogFrag
     }
 
     private void startVoiceRecorder() {
-        if (mVoiceRecorder != null) {
-            mVoiceRecorder.stop();
-        }
-        mVoiceRecorder = new VoiceRecorder(mVoiceCallback);
-        mVoiceRecorder.start();
+//        if (mVoiceRecorder != null) {
+//            mVoiceRecorder.stop();
+//        }
+//        mVoiceRecorder = new VoiceRecorder(mVoiceCallback);
+//        mVoiceRecorder.start();
     }
 
     private void stopVoiceRecorder() {
-        if (mVoiceRecorder != null) {
-            mVoiceRecorder.stop();
-            mVoiceRecorder = null;
-        }
+//        if (mVoiceRecorder != null) {
+//            mVoiceRecorder.stop();
+//            mVoiceRecorder = null;
+//        }
     }
 
     private void showPermissionMessageDialog() {
@@ -744,7 +750,7 @@ public class MainActivity extends AppCompatActivity implements MessageDialogFrag
                     if (isFinal) {
                         writeLog("pilot-jm.txt", log + "\n");
                         Log.d("SpeechRecognizeResult-Final", log);
-                        mVoiceRecorder.dismiss();
+//                        mVoiceRecorder.dismiss();
                         socket.emit(portPath,
                                 text);
                     }
@@ -941,6 +947,63 @@ public class MainActivity extends AppCompatActivity implements MessageDialogFrag
                 if (bleService != null) {
                     final boolean result = bleService.connect(EXTRAS_DEVICE_ADDRESS);
                     Log.d(HR_TAG, "Connect request result=" + result);
+                }
+            }
+        });
+
+        final Button record_btn = findViewById(R.id.recbtn);
+        myAudioRecorder = new MediaRecorder();
+        myAudioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+        myAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.DEFAULT);
+        myAudioRecorder.setAudioEncoder(MediaRecorder.OutputFormat.DEFAULT);
+
+        final Handler handler = new Handler();
+        final Runnable startrec = new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    myAudioRecorder.stop();
+                    myAudioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+                    myAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.DEFAULT);
+                    myAudioRecorder.setAudioEncoder(MediaRecorder.OutputFormat.DEFAULT);
+                } catch (IllegalStateException ise) {
+                    // make something ...
+                    System.out.println(2);
+                }
+                long time = System.currentTimeMillis();
+                SimpleDateFormat dayTime = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss-SSS");
+                String filename = dayTime.format(new Date(time));
+                String foldername = "/suggestbot_voice/";
+                String outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + foldername+ filename + ".3gp";
+                myAudioRecorder.setOutputFile(outputFile);
+                System.out.println(outputFile);
+                int duration_milli = 1000;
+                try{
+                    myAudioRecorder.prepare();
+                    myAudioRecorder.start();
+                } catch (IllegalStateException ise) {
+                    // make something ...
+                } catch (IOException ioe) {
+                    // make something
+                }
+                handler.postDelayed(this, duration_milli);
+            }
+        };
+
+        record_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (recflag) {
+                    handler.removeCallbacks(startrec);
+                    Toast.makeText(getApplicationContext(), "Audio file saved", Toast.LENGTH_LONG).show();
+                    record_btn.setText("Audio Record");
+                    recflag = false;
+                }
+                else{
+                    startrec.run();
+                    Toast.makeText(getApplicationContext(), "Recording started", Toast.LENGTH_LONG).show();
+                    record_btn.setText("Recording..");
+                    recflag = true;
                 }
             }
         });
@@ -1465,7 +1528,7 @@ public class MainActivity extends AppCompatActivity implements MessageDialogFrag
         switch (event.sensor.getType()) {
             case Sensor.TYPE_ACCELEROMETER:
                 long eventTime = System.currentTimeMillis();
-                Log.d("IMU", ""+ (eventTime - startTime));
+//                Log.d("IMU", ""+ (eventTime - startTime));
                 startTime = eventTime;
                 if (socketConnectionFlag) {
                     socket.emit(portPath,

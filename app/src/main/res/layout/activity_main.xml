@@ -298,6 +298,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Get Turn" />
+                <Button
+                    android:layout_weight="1"
+                    android:id="@+id/recbtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Audio Record" />
 
             </LinearLayout>
 
