@@ -303,6 +303,7 @@ public class MainActivity extends AppCompatActivity implements MessageDialogFrag
         initNeurosky();
         initHR();
 
+
         sensorDataSender = new CountDownTimer(50, 50) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -313,6 +314,29 @@ public class MainActivity extends AppCompatActivity implements MessageDialogFrag
             public void onFinish() {
 
                 if (socketConnectionFlag) {
+                    JSONObject packet = new JSONObject();
+                    try{
+                        packet.put("e4_accel_x", e4_accel_x);
+                        packet.put("e4_accel_y", e4_accel_y);
+                        packet.put("e4_accel_z", e4_accel_z);
+                        packet.put("e4_bvp", e4_bvp);
+                        packet.put("e4_gsr", e4_gsr);
+                        packet.put("e4_ibi", e4_ibi);
+                        packet.put("heart_rate", heart_rate);
+                        packet.put("brain_wave_high_alpha", brain_wave_high_alpha);
+                        packet.put("brain_wave_low_alpha", brain_wave_low_alpha);
+                        packet.put("brain_wave_high_beta", brain_wave_high_beta);
+                        packet.put("brain_wave_low_beta", brain_wave_low_beta);
+                        packet.put("brain_wave_middle_gamma", brain_wave_middle_gamma);
+                        packet.put("brain_wave_low_gamma", brain_wave_low_gamma);
+                        packet.put("brain_wave_theta", brain_wave_theta);
+                        packet.put("brain_wave_delta", brain_wave_delta);
+
+                        socket.emit(portPathSensor, packet);
+                    }catch (JSONException e){
+                        Log.d("Exception", "JSon Exception");
+                    }
+                    /*
                     socket.emit(portPathSensor,
                             Float.toString(e4_accel_x),
                             Float.toString(e4_accel_y),
@@ -330,6 +354,8 @@ public class MainActivity extends AppCompatActivity implements MessageDialogFrag
                             Float.toString(brain_wave_low_gamma),
                             Float.toString(brain_wave_theta),
                             Float.toString(brain_wave_delta));
+
+                     */
                     Log.d("data", ""+
                             e4_accel_x+", "+
                             e4_accel_y+", "+
